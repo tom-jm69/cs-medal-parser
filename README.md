@@ -1,2 +1,6 @@
 # cs-medal-parser
-parses medals, coins and pins from csgo api
+Get showcase collectibles from csgo via [byMykel](https://github.com/ByMykel/CSGO-API)
+
+Features:
+- image is being cropped
+- images are not redownloaded every time
