@@ -1,0 +1,6 @@
+services:
+  cs2medalparser:
+    build: .
+    container_name: cs2medalparser
+    volumes:
+      - ./data/:/app/data/

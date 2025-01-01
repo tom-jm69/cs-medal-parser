@@ -30,33 +30,11 @@ def dump_collectibles(collectibles: list) -> None:
     if not collectibles:
         raise ValueError("Missing collectibles variable !")
     if not os.path.exists(DUMP_FOLDER):
-        os.mkdir(DUMP_FOLDER)
+        os.makedirs(DUMP_FOLDER)
     now = datetime.strftime(datetime.now(), format="%d_%m_%Y_%H_%M_%S")
     with open(f"{DUMP_FOLDER}collectibles_{now}.json", "w") as f:
         json.dump(collectibles, f, ensure_ascii=False, indent=4)
         print(f"Successfully dumped collectibles_{now}.json")
-
-
-# def filter_types(collectibles: list, filter: list[str]) -> None | List:
-#    """Filters out specific types from collectibles and prints their image URLs."""
-#    collected = []
-#    if not collectibles:
-#        raise ValueError("Missing collectibles variable!")
-#
-#    for count, collectible in enumerate(collectibles):
-#        print(count)
-#        collectible_type = collectible.get("type")
-#
-#        if collectible_type:
-#            if collectible_type.lower() in filter:
-#                collected.append({"id": collectible.get("id"), "image": collectible.get("image")})
-#        else:
-#            # If 'type' is None, check the name/description
-#            name_description = f"{collectible.get('name', '')} {collectible.get('description', '')}".lower()
-#            for collectible_type in filter:
-#                if collectible_type.lower() in name_description:
-#                    collected.append({"id": collectible.get("id"), "image": collectible.get("image")})
-#    return collected
 
 
 def filter_types(collectibles: list, filter: list[str]) -> list | None:
@@ -106,7 +84,7 @@ def filter_types(collectibles: list, filter: list[str]) -> list | None:
 def save_image(collectibles: list, output_folder: str) -> None:
     """Saves the collectible images in the specified folder, resizing them to 256x192 without losing content."""
     if not os.path.exists(output_folder):
-        os.mkdir(output_folder)
+        os.makedirs(output_folder)
 
     for collectible in collectibles:
         image_name = f"{collectible.get('id').strip('collectible-')}.png"
@@ -124,7 +102,9 @@ def save_image(collectibles: list, output_folder: str) -> None:
                             img.save(image_path)
                             print(f"Image resized and saved: {image_path}")
                         else:
-                            print(f"Image {image_name} already has the correct resolution.")
+                            print(
+                                f"Image {image_name} already has the correct resolution."
+                            )
                 else:
                     # If the image does not exist, download and resize it
                     print(f"Downloading image {image_name}...")
@@ -136,9 +116,12 @@ def save_image(collectibles: list, output_folder: str) -> None:
                     img.save(image_path)
                     print(f"Image saved: {image_path}")
             except Exception as e:
-                print(f"Error downloading or processing image for {collectible.get('id')}: {e}")
+                print(
+                    f"Error downloading or processing image for {collectible.get('id')}: {e}"
+                )
         else:
             print(f"No image URL found for {collectible.get('id')}")
+
 
 def resize_and_pad_image(img: Image) -> Image:
     """Resizes the image while maintaining aspect ratio and pads it to 256x192."""
