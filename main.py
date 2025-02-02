@@ -52,7 +52,6 @@ def filter_types(collectibles: list, filter: list[str]) -> list | None:
     )
 
     for count, collectible in enumerate(collectibles):
-        print(f"Processing item {count} (ID: {collectible.get('id')})")
 
         # Ensure collectible contains the necessary keys and avoid issues
         if not collectible.get("id"):
@@ -101,10 +100,6 @@ def save_image(collectibles: list, output_folder: str) -> None:
                             img = resize_and_pad_image(img)
                             img.save(image_path)
                             print(f"Image resized and saved: {image_path}")
-                        else:
-                            print(
-                                f"Image {image_name} already has the correct resolution."
-                            )
                 else:
                     # If the image does not exist, download and resize it
                     print(f"Downloading image {image_name}...")
@@ -144,7 +139,6 @@ def main() -> None:
     if collectibles:
         dump_collectibles(collectibles)
         filtered_collectibles = filter_types(collectibles, COLLECTIBLE_TYPES)
-        print(len(filtered_collectibles))
         save_image(filtered_collectibles, OUTPUT_FOLDER)
 
 
