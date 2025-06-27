@@ -1,6 +1,10 @@
 services:
-  cs2medalparser:
+  cs2-medal-parser:
     build: .
-    container_name: cs2medalparser
+    container_name: cs2-medal-parser:latest
     volumes:
+      # Persistent data storage for medals and API responses
       - ./data/:/app/data/
+    environment:
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
