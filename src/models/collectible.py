@@ -2,7 +2,7 @@
 
 from typing import List, Optional
 
-from pydantic import BaseModel, Field, HttpUrl, validator
+from pydantic import BaseModel, Field, HttpUrl, field_validator
 
 
 class Collectible(BaseModel):
@@ -12,9 +12,7 @@ class Collectible(BaseModel):
     name: Optional[str] = Field(
         default=None, description="Display name of the collectible"
     )
-    description: Optional[str] = Field(
-        default=None, description="Item description"
-    )
+    description: Optional[str] = Field(default=None, description="Item description")
     type: Optional[str] = Field(
         default=None, description="Collectible type (medal, coin, pin, etc.)"
     )
@@ -22,14 +20,16 @@ class Collectible(BaseModel):
         default=None, description="URL to the collectible image"
     )
 
-    @validator("id")
+    @field_validator("id")
+    @classmethod
     def validate_id(cls, v):
         """Ensure ID is not empty"""
         if not v or not v.strip():
             raise ValueError("Collectible ID cannot be empty")
         return v.strip()
 
-    @validator("image", pre=True)
+    @field_validator("image", mode="before")
+    @classmethod
     def validate_image_url(cls, v):
         """Handle empty image URLs"""
         if v == "" or v is None:
@@ -63,7 +63,8 @@ class CollectibleFilter(BaseModel):
         default=True, description="Only include items with image URLs"
     )
 
-    @validator("types")
+    @field_validator("types")
+    @classmethod
     def validate_types(cls, v):
         """Ensure types list is not empty"""
         if not v:
@@ -103,7 +104,8 @@ class CollectibleBatch(BaseModel):
         default=0, description="Number of items after filtering"
     )
 
-    @validator("total_count", "filtered_count")
+    @field_validator("total_count", "filtered_count")
+    @classmethod
     def validate_counts(cls, v):
         """Ensure counts are non-negative"""
         if v < 0:
