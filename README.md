@@ -53,7 +53,19 @@ COLLECTIBLE_TYPES = ["pick", "coin", "medal", "pin", "trophy", "badge", "pass", 
 
 ## Docker Deployment
 
-### Build and Run
+### Pre-built Images (Recommended)
+
+Pull the optimized multi-stage image from Docker Hub:
+
+```bash
+# Pull latest version
+docker pull username/cs-medal-parser:latest
+
+# Run directly
+docker run --rm -v $(pwd)/data:/app/data username/cs-medal-parser:latest
+```
+
+### Build Locally
 
 ```bash
 docker build -t cs-medal-parser .
@@ -65,6 +77,17 @@ docker run --rm -v $(pwd)/data:/app/data cs-medal-parser
 ```bash
 docker compose up
 ```
+
+### Automated Builds
+
+🚀 **Automated Docker Hub builds** are configured via GitHub Actions:
+
+- **Push to main**: Builds and pushes `latest` tag
+- **Version tags**: Builds and pushes semantic version tags
+- **Multi-platform**: Supports `linux/amd64` and `linux/arm64`
+- **Optimized**: 60-70% smaller images using multi-stage builds
+
+See [Docker Setup Guide](.github/DOCKER_SETUP.md) for configuration details.
 
 ### Automated Scheduling
 
