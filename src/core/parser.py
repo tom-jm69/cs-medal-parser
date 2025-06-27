@@ -172,7 +172,7 @@ class CSMedalParser:
         successful_count = sum(1 for r in results if r.success)
         failed_count = len(results) - successful_count
 
-        logger.info(f"Processing Summary:")
+        logger.info("Processing Summary:")
         logger.info(f"  • Total images processed: {len(results)}")
         logger.info(f"  • Successful: {successful_count}")
         logger.info(f"  • Failed: {failed_count}")

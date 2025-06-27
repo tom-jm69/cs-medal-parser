@@ -153,7 +153,7 @@ def main():
 
         # Show statistics
         with_images = len([c for c in filtered_batch.items if c.image])
-        logger.info(f"Statistics:")
+        logger.info("Statistics:")
         logger.info(f"  • Total collectibles: {filtered_batch.total_count}")
         logger.info(f"  • Matched filter: {filtered_batch.filtered_count}")
         logger.info(f"  • With images: {with_images}")
