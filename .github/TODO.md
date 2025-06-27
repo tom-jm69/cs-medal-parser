@@ -1,0 +1,14 @@
+- [ ] **Make Docker container configurable via environment variables**:
+  - Refactor `config.py` to read values using `os.getenv()`
+  - Ensure all configurable fields can be passed in from `docker-compose.yml`:
+    - `COLLECTIBLES_URL`
+    - `OUTPUT_FOLDER`
+    - `DUMP_FOLDER`
+    - `COLLECTIBLE_TYPES`
+    - `MAX_WORKERS`
+    - `REQUEST_TIMEOUT`
+    - `MAX_RETRIES`
+    - `TARGET_WIDTH`
+    - `TARGET_HEIGHT`
+  - Add `.env` support (optional) for local development
+  - Document example usage of these variables in `docker-compose.yml`

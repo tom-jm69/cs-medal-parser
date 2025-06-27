@@ -11,6 +11,10 @@ A high-performance Python application for parsing and downloading CS:GO medals, 
 - **Advanced Logging**: Beautiful structured logging with loguru for enhanced debugging and monitoring
 - **Flexible Configuration**: Easily customizable settings via `config.py`
 
+## Todo
+
+- [Todos](/.github/TODO.md)
+
 ## Quick Start
 
 ### Installation
@@ -20,7 +24,9 @@ git clone https://github.com/tom-jm69/cs-medal-parser.git
 cd cs-medal-parser
 python -m pip install -r requirements.txt
 ```
+
 #
+
 ### Usage
 
 ```bash
