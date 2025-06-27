@@ -95,7 +95,7 @@ class ApiService:
 
         try:
             # Convert Pydantic models to dict for JSON serialization
-            data = [collectible.dict() for collectible in collectibles]
+            data = [collectible.model_dump() for collectible in collectibles]
 
             with open(filepath, "w", encoding="utf-8") as f:
                 json.dump(data, f, ensure_ascii=False, indent=4, default=str)
