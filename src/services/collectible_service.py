@@ -7,8 +7,12 @@ from typing import List
 
 from loguru import logger
 
-from ..models.collectible import (Collectible, CollectibleBatch,
-                                  CollectibleFilter, ProcessingResult)
+from ..models.collectible import (
+    Collectible,
+    CollectibleBatch,
+    CollectibleFilter,
+    ProcessingResult,
+)
 from ..utils.image_processor import ImageProcessor
 
 

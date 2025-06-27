@@ -6,8 +6,12 @@ from typing import List, Optional
 
 from loguru import logger
 
-from ..models.collectible import (Collectible, CollectibleBatch,
-                                  CollectibleFilter, ProcessingResult)
+from ..models.collectible import (
+    Collectible,
+    CollectibleBatch,
+    CollectibleFilter,
+    ProcessingResult,
+)
 from ..services.api_service import ApiService
 from ..services.collectible_service import CollectibleService
 from ..utils.image_processor import ImageProcessor

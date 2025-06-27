@@ -8,13 +8,17 @@ from pydantic import BaseModel, Field, HttpUrl, validator
 class Collectible(BaseModel):
     """Pydantic model for a CS:GO collectible item"""
 
-    id: str = Field(..., description="Unique collectible identifier")
-    name: Optional[str] = Field(None, description="Display name of the collectible")
-    description: Optional[str] = Field(None, description="Item description")
-    type: Optional[str] = Field(
-        None, description="Collectible type (medal, coin, pin, etc.)"
+    id: str = Field(description="Unique collectible identifier")
+    name: Optional[str] = Field(
+        default=None, description="Display name of the collectible"
     )
-    image: Optional[HttpUrl] = Field(None, description="URL to the collectible image")
+    description: Optional[str] = Field(default=None, description="Item description")
+    type: Optional[str] = Field(
+        default=None, description="Collectible type (medal, coin, pin, etc.)"
+    )
+    image: Optional[HttpUrl] = Field(
+        default=None, description="URL to the collectible image"
+    )
 
     @validator("id")
     def validate_id(cls, v):
@@ -53,7 +57,9 @@ class CollectibleFilter(BaseModel):
         ],
         description="List of collectible types to filter",
     )
-    require_image: bool = Field(True, description="Only include items with image URLs")
+    require_image: bool = Field(
+        default=True, description="Only include items with image URLs"
+    )
 
     @validator("types")
     def validate_types(cls, v):
@@ -66,13 +72,15 @@ class CollectibleFilter(BaseModel):
 class ProcessingResult(BaseModel):
     """Result of image processing operation"""
 
-    collectible_id: str = Field(..., description="ID of the processed collectible")
-    image_name: str = Field(..., description="Generated image filename")
-    success: bool = Field(..., description="Whether processing was successful")
+    collectible_id: str = Field(description="ID of the processed collectible")
+    image_name: str = Field(description="Generated image filename")
+    success: bool = Field(description="Whether processing was successful")
     error_message: Optional[str] = Field(
-        None, description="Error message if processing failed"
+        default=None, description="Error message if processing failed"
     )
-    file_path: Optional[str] = Field(None, description="Path to the saved image file")
+    file_path: Optional[str] = Field(
+        default=None, description="Path to the saved image file"
+    )
 
     class Config:
         """Pydantic configuration"""
@@ -86,8 +94,12 @@ class CollectibleBatch(BaseModel):
     items: List[Collectible] = Field(
         default_factory=list, description="List of collectibles"
     )
-    total_count: int = Field(0, description="Total number of items in the batch")
-    filtered_count: int = Field(0, description="Number of items after filtering")
+    total_count: int = Field(
+        default=0, description="Total number of items in the batch"
+    )
+    filtered_count: int = Field(
+        default=0, description="Number of items after filtering"
+    )
 
     @validator("total_count", "filtered_count")
     def validate_counts(cls, v):

@@ -12,9 +12,18 @@ from pathlib import Path
 # Add src directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent / "src"))
 
-from config import (COLLECTIBLE_TYPES, COLLECTIBLES_URL, DUMP_FOLDER,
-                    MAX_RETRIES, MAX_WORKERS, OUTPUT_FOLDER, REQUEST_TIMEOUT,
-                    TARGET_HEIGHT, TARGET_WIDTH)
+# Import configuration and core module after path setup
+from config import (
+    COLLECTIBLE_TYPES,
+    COLLECTIBLES_URL,
+    DUMP_FOLDER,
+    MAX_RETRIES,
+    MAX_WORKERS,
+    OUTPUT_FOLDER,
+    REQUEST_TIMEOUT,
+    TARGET_HEIGHT,
+    TARGET_WIDTH,
+)
 from src.core.parser import CSMedalParser
 
 
