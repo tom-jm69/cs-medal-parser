@@ -1,12 +1,23 @@
 # API Configuration
-COLLECTIBLES_URL = "https://bymykel.github.io/CSGO-API/api/en/collectibles.json"
+COLLECTIBLES_URL = (
+    "https://bymykel.github.io/CSGO-API/api/en/collectibles.json"
+)
 
 # Directory Configuration
 OUTPUT_FOLDER = "data/medals/"
 DUMP_FOLDER = "data/responses/"
 
 # Filter Configuration
-COLLECTIBLE_TYPES = ["pick", "coin", "medal", "pin", "trophy", "badge", "pass", "stars"]
+COLLECTIBLE_TYPES = [
+    "pick",
+    "coin",
+    "medal",
+    "pin",
+    "trophy",
+    "badge",
+    "pass",
+    "stars",
+]
 
 # Performance Configuration
 MAX_WORKERS = 10  # Number of concurrent download threads

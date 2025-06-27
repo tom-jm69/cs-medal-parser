@@ -47,7 +47,7 @@ class ImageProcessor:
             return False
 
     def resize_and_pad_image(self, img: Image.Image) -> Image.Image:
-        """Resize image while maintaining aspect ratio and pad to target dimensions
+        """Resize image maintaining aspect ratio and pad to target dimensions
 
         Args:
             img: PIL Image object
@@ -59,7 +59,9 @@ class ImageProcessor:
         img = img.copy()
 
         # Resize while maintaining aspect ratio
-        img.thumbnail((self.target_width, self.target_height), Image.Resampling.LANCZOS)
+        target_size = (self.target_width, self.target_height)
+        resample = Image.LANCZOS
+        img.thumbnail(target_size, resample)
 
         # Calculate padding for centering
         padding_left = (self.target_width - img.width) // 2
@@ -73,7 +75,9 @@ class ImageProcessor:
 
         return new_img
 
-    def process_image_from_bytes(self, img_data: bytes) -> Optional[Image.Image]:
+    def process_image_from_bytes(
+        self, img_data: bytes
+    ) -> Optional[Image.Image]:
         """Process image from raw bytes
 
         Args:
@@ -98,7 +102,9 @@ class ImageProcessor:
             logger.error(f"Error processing image from bytes: {e}")
             return None
 
-    def download_and_process_image(self, image_url: str, output_path: Path) -> bool:
+    def download_and_process_image(
+        self, image_url: str, output_path: Path
+    ) -> bool:
         """Download and process image from URL
 
         Args:
@@ -113,18 +119,26 @@ class ImageProcessor:
             if output_path.exists():
                 try:
                     with Image.open(output_path) as existing_img:
-                        if existing_img.size == (self.target_width, self.target_height):
+                        if existing_img.size == (
+                            self.target_width,
+                            self.target_height,
+                        ):
                             return True  # Already processed correctly
                         else:
-                            logger.info(f"Resizing existing image {output_path.name}")
+                            logger.info(
+                                f"Resizing existing image {output_path.name}"
+                            )
                 except Exception as e:
+                    image_name = output_path.name
                     logger.warning(
-                        f"Existing image {output_path.name} corrupted, re-downloading: {e}"
+                        f"Image {image_name} corrupted, re-downloading: {e}"
                     )
 
             # Download image data
             session = self.network_client.create_session()
-            img_data = self.network_client.download_with_retry(image_url, session)
+            img_data = self.network_client.download_with_retry(
+                image_url, session
+            )
             session.close()
 
             if not img_data:
@@ -149,7 +163,9 @@ class ImageProcessor:
             )
             return False
 
-    def get_image_dimensions(self, image_path: Path) -> Optional[Tuple[int, int]]:
+    def get_image_dimensions(
+        self, image_path: Path
+    ) -> Optional[Tuple[int, int]]:
         """Get dimensions of an image file
 
         Args:

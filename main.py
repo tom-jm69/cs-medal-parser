@@ -9,22 +9,14 @@ with concurrent processing, advanced error handling, and structured logging.
 import sys
 from pathlib import Path
 
+from config import (COLLECTIBLE_TYPES, COLLECTIBLES_URL, DUMP_FOLDER,
+                    MAX_RETRIES, MAX_WORKERS, OUTPUT_FOLDER, REQUEST_TIMEOUT,
+                    TARGET_HEIGHT, TARGET_WIDTH)
+
 # Add src directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent / "src"))
 
-# Import configuration and core module after path setup
-from config import (
-    COLLECTIBLE_TYPES,
-    COLLECTIBLES_URL,
-    DUMP_FOLDER,
-    MAX_RETRIES,
-    MAX_WORKERS,
-    OUTPUT_FOLDER,
-    REQUEST_TIMEOUT,
-    TARGET_HEIGHT,
-    TARGET_WIDTH,
-)
-from src.core.parser import CSMedalParser
+from src.core.parser import CSMedalParser  # noqa: E402
 
 
 def main() -> int:

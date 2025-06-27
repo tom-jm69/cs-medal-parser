@@ -9,13 +9,14 @@ from pathlib import Path
 
 from loguru import logger
 
+from config import COLLECTIBLE_TYPES, DUMP_FOLDER
+
 # Add src directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent / "src"))
-
-from config import COLLECTIBLE_TYPES, DUMP_FOLDER
-from src.models.collectible import Collectible, CollectibleFilter
-from src.services.collectible_service import CollectibleService
-from src.utils.image_processor import ImageProcessor
+# Imports from src after path modification
+from src.models.collectible import Collectible, CollectibleFilter  # noqa: E402
+from src.services.collectible_service import CollectibleService  # noqa: E402
+from src.utils.image_processor import ImageProcessor  # noqa: E402
 
 
 def find_newest_json_file(directory: Path) -> Path | None:
@@ -64,8 +65,9 @@ def load_collectibles_from_file(file_path: Path) -> list[Collectible]:
                 collectible = Collectible(**item_data)
                 collectibles.append(collectible)
             except Exception as e:
+                item_id = item_data.get('id', 'unknown')
                 logger.warning(
-                    f"Failed to parse collectible {item_data.get('id', 'unknown')}: {e}"
+                    f"Failed to parse collectible {item_id}: {e}"
                 )
                 continue
 
@@ -76,7 +78,9 @@ def load_collectibles_from_file(file_path: Path) -> list[Collectible]:
         return []
 
 
-def save_filtered_results(collectibles: list[Collectible], output_file: str) -> bool:
+def save_filtered_results(
+    collectibles: list[Collectible], output_file: str
+) -> bool:
     """Save filtered collectibles to JSON file
 
     Args:
@@ -122,7 +126,9 @@ def main():
         logger.error("Failed to load collectibles from file")
         return
 
-    logger.info(f"Loaded {len(collectibles)} collectibles from {newest_file.name}")
+    logger.info(
+        f"Loaded {len(collectibles)} collectibles from {newest_file.name}"
+    )
 
     # Initialize services for testing
     image_processor = ImageProcessor()
@@ -135,8 +141,9 @@ def main():
     )
 
     if filtered_batch.items:
+        matched_count = filtered_batch.filtered_count
         logger.info(
-            f"Filter test successful: {filtered_batch.filtered_count} collectibles matched"
+            f"Filter test successful: {matched_count} collectibles matched"
         )
 
         # Save filtered results
@@ -148,7 +155,9 @@ def main():
         sample_size = min(5, len(filtered_batch.items))
         logger.info(f"Sample of first {sample_size} filtered results:")
         for i, item in enumerate(filtered_batch.items[:sample_size]):
-            image_preview = str(item.image)[:50] + "..." if item.image else "N/A"
+            image_preview = (
+                str(item.image)[:50] + "..." if item.image else "N/A"
+            )
             logger.info(f"  {i+1}. ID: {item.id}, Image: {image_preview}")
 
         # Show statistics

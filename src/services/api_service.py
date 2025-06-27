@@ -26,7 +26,9 @@ class ApiService:
         self.base_url = base_url.rstrip("/")
         self.timeout = timeout
         self.max_retries = max_retries
-        self.network_client = NetworkClient(timeout=timeout, max_retries=max_retries)
+        self.network_client = NetworkClient(
+            timeout=timeout, max_retries=max_retries
+        )
 
     async def fetch_collectibles(self) -> List[Collectible]:
         """Fetch all collectibles from the API
@@ -45,7 +47,9 @@ class ApiService:
             response.raise_for_status()
 
             raw_data = response.json()
-            logger.info(f"Successfully fetched {len(raw_data)} raw collectibles")
+            logger.info(
+                f"Successfully fetched {len(raw_data)} raw collectibles"
+            )
 
             # Convert to Pydantic models
             collectibles = []
@@ -54,12 +58,15 @@ class ApiService:
                     collectible = Collectible(**item_data)
                     collectibles.append(collectible)
                 except Exception as e:
+                    item_id = item_data.get('id', 'unknown')
                     logger.warning(
-                        f"Failed to parse collectible {item_data.get('id', 'unknown')}: {e}"
+                        f"Failed to parse collectible {item_id}: {e}"
                     )
                     continue
 
-            logger.info(f"Successfully parsed {len(collectibles)} collectibles")
+            logger.info(
+                f"Successfully parsed {len(collectibles)} collectibles"
+            )
             return collectibles
 
         except Exception as e:
@@ -100,8 +107,9 @@ class ApiService:
             with open(filepath, "w", encoding="utf-8") as f:
                 json.dump(data, f, ensure_ascii=False, indent=4, default=str)
 
+            collectible_count = len(collectibles)
             logger.info(
-                f"Successfully dumped {len(collectibles)} collectibles to {filepath}"
+                f"Dumped {collectible_count} collectibles to {filepath}"
             )
             return filepath
 

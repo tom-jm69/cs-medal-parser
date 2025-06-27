@@ -6,12 +6,8 @@ from typing import List, Optional
 
 from loguru import logger
 
-from ..models.collectible import (
-    Collectible,
-    CollectibleBatch,
-    CollectibleFilter,
-    ProcessingResult,
-)
+from ..models.collectible import (Collectible, CollectibleBatch,
+                                  CollectibleFilter, ProcessingResult)
 from ..services.api_service import ApiService
 from ..services.collectible_service import CollectibleService
 from ..utils.image_processor import ImageProcessor
@@ -120,7 +116,9 @@ class CSMedalParser:
             logger.error(f"Failed to fetch collectibles: {e}")
             return None
 
-    def _dump_collectibles(self, collectibles: List[Collectible]) -> Optional[Path]:
+    def _dump_collectibles(
+        self, collectibles: List[Collectible]
+    ) -> Optional[Path]:
         """Dump collectibles to JSON file
 
         Args:
@@ -130,12 +128,16 @@ class CSMedalParser:
             Path to dump file or None if failed
         """
         try:
-            return self.api_service.dump_collectibles(collectibles, self.dump_folder)
+            return self.api_service.dump_collectibles(
+                collectibles, self.dump_folder
+            )
         except Exception as e:
             logger.error(f"Failed to dump collectibles: {e}")
             return None
 
-    def _filter_collectibles(self, collectibles: List[Collectible]) -> CollectibleBatch:
+    def _filter_collectibles(
+        self, collectibles: List[Collectible]
+    ) -> CollectibleBatch:
         """Filter collectibles based on configuration
 
         Args:
@@ -187,9 +189,13 @@ class CSMedalParser:
             # Log a few failed items for debugging
             failed_results = [r for r in results if not r.success][:5]
             for result in failed_results:
-                logger.debug(f"Failed: {result.image_name} - {result.error_message}")
+                logger.debug(
+                    f"Failed: {result.image_name} - {result.error_message}"
+                )
 
-        logger.success(f"CS:GO Medal Parser completed in {elapsed_time:.2f} seconds")
+        logger.success(
+            f"CS:GO Medal Parser completed in {elapsed_time:.2f} seconds"
+        )
 
     def get_stats(self) -> dict:
         """Get current statistics
@@ -203,7 +209,9 @@ class CSMedalParser:
             else []
         )
         dump_files = (
-            list(self.dump_folder.glob("*.json")) if self.dump_folder.exists() else []
+            list(self.dump_folder.glob("*.json"))
+            if self.dump_folder.exists()
+            else []
         )
 
         return {

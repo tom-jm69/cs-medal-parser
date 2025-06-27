@@ -7,12 +7,8 @@ from typing import List
 
 from loguru import logger
 
-from ..models.collectible import (
-    Collectible,
-    CollectibleBatch,
-    CollectibleFilter,
-    ProcessingResult,
-)
+from ..models.collectible import (Collectible, CollectibleBatch,
+                                  CollectibleFilter, ProcessingResult)
 from ..utils.image_processor import ImageProcessor
 
 
@@ -46,8 +42,10 @@ class CollectibleService:
             logger.warning("No collectibles provided for filtering")
             return CollectibleBatch(total_count=0, filtered_count=0)
 
+        collectible_count = len(collectibles)
+        filter_types = filter_config.types
         logger.info(
-            f"Filtering {len(collectibles)} collectibles for types: {filter_config.types}"
+            f"Filtering {collectible_count} items for types: {filter_types}"
         )
 
         # Create optimized regex pattern
@@ -60,7 +58,9 @@ class CollectibleService:
                 if self._matches_filter(collectible, pattern, filter_config):
                     batch.add_collectible(collectible)
             except Exception as e:
-                logger.warning(f"Error filtering collectible {collectible.id}: {e}")
+                logger.warning(
+                    f"Error filtering collectible {collectible.id}: {e}"
+                )
                 continue
 
         logger.info(f"Found {batch.filtered_count} matching collectibles")
@@ -135,8 +135,9 @@ class CollectibleService:
 
         # Filter collectibles with images
         collectibles_with_images = [c for c in collectibles if c.image]
+        image_count = len(collectibles_with_images)
         logger.info(
-            f"Processing {len(collectibles_with_images)} images with {self.max_workers} workers"
+            f"Processing {image_count} images with {self.max_workers} workers"
         )
 
         # Ensure output folder exists
@@ -162,7 +163,9 @@ class CollectibleService:
 
                 if result.success:
                     successful_downloads += 1
-                    logger.debug(f"Successfully processed: {result.image_name}")
+                    logger.debug(
+                        f"Successfully processed: {result.image_name}"
+                    )
                 else:
                     failed_downloads += 1
                     logger.warning(f"Failed to process: {result.image_name}")
@@ -172,12 +175,14 @@ class CollectibleService:
                 if total_completed % 10 == 0 or total_completed == len(
                     collectibles_with_images
                 ):
+                    total_images = len(collectibles_with_images)
                     logger.info(
-                        f"Progress: {total_completed}/{len(collectibles_with_images)} images processed"
+                        f"Progress: {total_completed}/{total_images} processed"
                     )
 
         logger.info(
-            f"Image processing complete: {successful_downloads} successful, {failed_downloads} failed"
+            f"Image processing complete: {successful_downloads} successful, "
+            f"{failed_downloads} failed"
         )
         return results
 

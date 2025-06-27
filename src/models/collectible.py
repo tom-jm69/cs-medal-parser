@@ -12,7 +12,9 @@ class Collectible(BaseModel):
     name: Optional[str] = Field(
         default=None, description="Display name of the collectible"
     )
-    description: Optional[str] = Field(default=None, description="Item description")
+    description: Optional[str] = Field(
+        default=None, description="Item description"
+    )
     type: Optional[str] = Field(
         default=None, description="Collectible type (medal, coin, pin, etc.)"
     )
