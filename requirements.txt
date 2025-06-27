@@ -1,7 +1,6 @@
-certifi
-charset-normalizer
-idna
-pillow
+pydantic
 requests
-urllib3
+pillow
 loguru
+aiohttp
+urllib3
