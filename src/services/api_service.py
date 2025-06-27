@@ -4,13 +4,9 @@ import asyncio
 import json
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import List
 
-import aiohttp
 from loguru import logger
-from requests import Session
-from requests.adapters import HTTPAdapter
-from urllib3.util.retry import Retry
 
 from ..models.collectible import Collectible
 from ..utils.network import NetworkClient
