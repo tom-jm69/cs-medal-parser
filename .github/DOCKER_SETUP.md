@@ -33,9 +33,10 @@ Add the following **Repository secrets**:
 
 The workflow will automatically:
 
-- **On push to `main`**: Build and push `latest` tag
-- **On version tags** (e.g., `v1.0.0`): Build and push version tags (`1.0.0`, `1.0`, `1`, `latest`)
-- **On pull requests**: Build only (no push) for testing
+- **On any push**: Build and push with appropriate tags
+- **On pull requests to main**: Build only (no push) for testing
+- **Branch-based tagging**: Each branch gets its own tag (e.g., `main`, `develop`, `feature-xyz`)
+- **Latest tag**: Only applied to pushes from the default branch (main)
 
 ### 4. Multi-Platform Builds
 
@@ -48,12 +49,11 @@ The workflow builds for:
 
 Examples of generated tags:
 
-- `username/cs-medal-parser:latest` (from main branch)
+- `username/cs-medal-parser:latest` (from main branch only)
 - `username/cs-medal-parser:main` (from main branch)
-- `username/cs-medal-parser:v1.2.3` (from git tag v1.2.3)
-- `username/cs-medal-parser:1.2.3` (from git tag v1.2.3)
-- `username/cs-medal-parser:1.2` (from git tag v1.2.3)
-- `username/cs-medal-parser:1` (from git tag v1.2.3)
+- `username/cs-medal-parser:develop` (from develop branch)
+- `username/cs-medal-parser:feature-auth` (from feature-auth branch)
+- `username/cs-medal-parser:bugfix-123` (from bugfix-123 branch)
 
 ## Usage
 

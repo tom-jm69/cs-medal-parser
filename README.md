@@ -82,8 +82,8 @@ docker compose up
 
 🚀 **Automated Docker Hub builds** are configured via GitHub Actions:
 
-- **Push to main**: Builds and pushes `latest` tag
-- **Version tags**: Builds and pushes semantic version tags
+- **Any push**: Builds and pushes branch-specific tags
+- **Main branch**: Also gets the `latest` tag
 - **Multi-platform**: Supports `linux/amd64` and `linux/arm64`
 - **Optimized**: 60-70% smaller images using multi-stage builds
 
