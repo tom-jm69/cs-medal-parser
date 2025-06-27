@@ -1,7 +1,6 @@
 #!/bin/env python3
 
 import json
-import logging
 import os
 import re
 import time
@@ -11,6 +10,7 @@ from io import BytesIO
 from typing import List, Optional, Tuple
 
 import requests
+from loguru import logger
 from PIL import Image
 from requests.adapters import HTTPAdapter
 from requests.models import HTTPError
@@ -20,8 +20,6 @@ from config import (
     COLLECTIBLE_TYPES,
     COLLECTIBLES_URL,
     DUMP_FOLDER,
-    LOG_FILE,
-    LOG_LEVEL,
     MAX_RETRIES,
     MAX_WORKERS,
     OUTPUT_FOLDER,
@@ -29,14 +27,6 @@ from config import (
     TARGET_HEIGHT,
     TARGET_WIDTH,
 )
-
-# Configure logging
-logging.basicConfig(
-    level=getattr(logging, LOG_LEVEL.upper()),
-    format="%(asctime)s - %(levelname)s - %(message)s",
-    handlers=[logging.FileHandler(LOG_FILE), logging.StreamHandler()],
-)
-logger = logging.getLogger(__name__)
 
 
 def create_session() -> requests.Session:
@@ -293,7 +283,7 @@ def main() -> None:
         save_image(filtered_collectibles, OUTPUT_FOLDER)
 
         elapsed_time = time.time() - start_time
-        logger.info(
+        logger.success(
             f"Medal parser completed successfully in {elapsed_time:.2f} seconds"
         )
 

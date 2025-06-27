@@ -1,16 +1,11 @@
 import json
-import logging
 import os
 from pathlib import Path
 
+from loguru import logger
+
 from config import COLLECTIBLE_TYPES, DUMP_FOLDER
 from main import filter_types
-
-# Configure logging for test script
-logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
-)
-logger = logging.getLogger(__name__)
 
 
 def find_newest_json_file(directory: str) -> str | None:
@@ -68,7 +63,7 @@ def main():
             with open(output_file, "w", encoding="utf-8") as f:
                 json.dump(filtered, f, ensure_ascii=False, indent=4)
 
-            logger.info(f"Filtered results saved to {output_file}")
+            logger.success(f"Filtered results saved to {output_file}")
 
             # Show sample results
             sample_size = min(5, len(filtered))
