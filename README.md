@@ -100,7 +100,7 @@ See [Docker Setup Guide](.github/DOCKER_SETUP.md) for configuration details.
 Cron job for 15-minute updates:
 
 ```bash
-*/15 * * * * docker compose -f /path/to/cs-medal-parser/docker-compose.yml run --rm csmedalparser >> /var/log/medalparser.log 2>&1
+*/15 * * * * docker compose -f /path/to/cs-medal-parser/docker-compose.yml run --rm cs2-medal-parser >> /var/log/medalparser.log 2>&1
 ```
 
 ## Testing
