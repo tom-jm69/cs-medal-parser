@@ -1,6 +1,6 @@
 # API Configuration
 COLLECTIBLES_URL = (
-    "https://bymykel.github.io/CSGO-API/api/en/collectibles.json"
+    "https://raw.githubusercontent.com/ByMykel/CSGO-API/main/public/api/en/collectibles.json"
 )
 
 # Directory Configuration
